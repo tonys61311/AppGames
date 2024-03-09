@@ -465,7 +465,7 @@ class PrimaryButtonState extends State<PrimaryButton> {
       margin: this.widget.margin,
       child: ButtonTheme(
         minWidth: 160,
-        child: RaisedButton(
+        child: ElevatedButton(
           child: Text(this.widget.label,
               style: TextStyle(
                 fontSize: 20,
@@ -474,13 +474,19 @@ class PrimaryButtonState extends State<PrimaryButton> {
                 letterSpacing: 0,
               )),
           onPressed: this.widget.onPressed,
-          textColor: Color(0xffffffff),
-          padding: widget.padding,
-          color: this.widget.color,
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(5))),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(this.widget.color),
+            padding: MaterialStateProperty.all(this.widget.padding),
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5)))),
+          )
+          // textColor: Color(0xffffffff),
+          // padding: widget.padding,
+          // color: this.widget.color,
+          // highlightColor: Colors.transparent,
+          // splashColor: Colors.transparent,
+          // shape: RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.all(Radius.circular(5))),
         ),
       ),
     );
