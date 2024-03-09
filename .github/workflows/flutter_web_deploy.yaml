@@ -3,7 +3,7 @@ name: Build and Deploy to Netlify
 on:
   push:
     branches:
-      - main  # or your default branch
+      - main
 
 jobs:
   build_and_deploy:
@@ -14,7 +14,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.10.5'  # Specify your Flutter version
+          flutter-version: '2.13-candidate.10'
 
       - name: Build Flutter Web
         run: |
