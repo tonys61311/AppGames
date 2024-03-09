@@ -14,7 +14,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.13-candidate.10'
+          flutter-version: '2.10.5'
 
       - name: Build Flutter Web
         run: |
@@ -34,3 +34,4 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+s
