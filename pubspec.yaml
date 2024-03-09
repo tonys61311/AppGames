@@ -50,6 +50,7 @@ flutter:
   assets:
     - assets/
     - assets/img/
-    - assets/audio/
+    - assets/audio/shuffle.mp3
+    - assets/audio/8002.mp3
     - assets/img/gameIcon/mahjong.png
     - assets/img/gameIcon/bomb.png
