@@ -1,11 +1,25 @@
+import 'package:flutter/foundation.dart';
+
 import 'audio_manager.dart';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
+String getAssetPath(String fileName) {
+  // 检查是否在Web环境且是否为release模式（即构建后的应用）
+  if (kIsWeb && const bool.fromEnvironment('dart.vm.product')) {
+    // 构建后的环境，使用调整后的路径
+    return 'assets/assets/audio/$fileName';
+  } else {
+    // 开发环境，使用原始路径
+    return 'assets/audio/$fileName';
+  }
+}
+
 class AudioManagerWeb implements AudioManager {
   @override
   Future<html.AudioElement> playSound(String fileName) async {
-    html.AudioElement audio = html.AudioElement("assets/audio/$fileName");
+    String filePath = getAssetPath(fileName);
+    html.AudioElement audio = html.AudioElement(filePath);
     await audio.play();
     return audio;
   }
