@@ -305,13 +305,10 @@ class MJPageState extends State<MahJongPage> {
             children: [
               for (var i = 0; i < _mahJongBloc.mJData.length; i++)
                 Flexible(
-                  child: AspectRatio(
-                    aspectRatio: 1 / 1.4,
-                    child: MJView(
-                      back: back,
-                      side: side,
-                      model: _mahJongBloc.mJData[i],
-                    ),
+                  child: MJView(
+                    back: back,
+                    side: side,
+                    model: _mahJongBloc.mJData[i],
                   ),
                 ),
             ],

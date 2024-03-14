@@ -188,20 +188,31 @@ class _MJViewState extends State<MJView> {
         // 在這裡，您可以使用constraints來獲取寬度和高度
         final width = constraints.maxWidth;
         final height = constraints.maxHeight;
-
+        print(constraints);
+print(constraints.maxHeight);
         // 使用獲取到的寬高來構建您的Widget
-        return AnimatedContainer(
-            curve:Curves.bounceIn,
-            duration: Duration(milliseconds: 2400),
-            margin: EdgeInsets.all(3),
-            child: widget.side ? buildSideView(width) : buildCardView(width, filePath)
+        return AspectRatio(
+          aspectRatio: 1 / 1.4,
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              // 在這裡，您可以使用constraints來獲取寬度和高度
+              final width = constraints.maxWidth;
+              final height = constraints.maxHeight;
+              // 使用獲取到的寬高來構建您的Widget
+              return AnimatedContainer(
+                  curve:Curves.bounceIn,
+                  duration: Duration(milliseconds: 2400),
+                  margin: EdgeInsets.all(3),
+                  child: widget.side ? buildSideView(width) : buildCardView(width, height, filePath)
+              ); // 根據寬高構建Container
+            },
+          )
         ); // 根據寬高構建Container
       },
     );
   }
 
-  Container buildCardView(double width, String filePath) {
-    double cardHeight = width * 1.4;
+  Container buildCardView(double width, double height, String filePath) {
     return Container(
             margin: widget.margin,
             child: Stack(
@@ -209,7 +220,7 @@ class _MJViewState extends State<MJView> {
                 // 底層容器，用於顯示牌的背面或正面的底色
                 Container(
                   width: width,
-                  height: cardHeight,
+                  height: height,
                   decoration: BoxDecoration(
                       color: widget.back ? Colors.grey[300] : Colors.orange, // 背面顏色
                       borderRadius: BorderRadius.circular(20) // 圓角設定
@@ -218,7 +229,7 @@ class _MJViewState extends State<MJView> {
                 // 第二層容器，用於創建有色邊框效果
                 Container(
                     width: width,
-                    height: cardHeight*0.87,
+                    height: height*0.87,
                     decoration: BoxDecoration(
                         color: widget.back ? Colors.orange[800] : Colors.grey[300], // 背面邊框顏色
                         borderRadius: BorderRadius.circular(20) // 圓角設定
@@ -227,7 +238,7 @@ class _MJViewState extends State<MJView> {
                 // 第三層容器，用於顯示牌的正面圖案或保持空白
                 Container(
                   width: width,
-                  height: cardHeight*0.76,
+                  height: height*0.76,
                   decoration: widget.back ? BoxDecoration(
                       color: Colors.orange, // 背面顏色
                       borderRadius: BorderRadius.circular(20) // 圓角設定
@@ -258,7 +269,7 @@ class _MJViewState extends State<MJView> {
                           child: Icon(
                             Icons.close, // 關閉圖標
                             color: Colors.white, // 圖標顏色
-                            size: 26, // 圖標大小
+                            size: height * 0.1, // 圖標大小
                           ),
                         ),
                       ),
