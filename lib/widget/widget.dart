@@ -208,6 +208,7 @@ class _MJViewState extends State<MJView> {
               children: [
                 // 底層容器，用於顯示牌的背面或正面的底色
                 Container(
+                  width: width,
                   height: cardHeight,
                   decoration: BoxDecoration(
                       color: widget.back ? Colors.grey[300] : Colors.orange, // 背面顏色
@@ -216,7 +217,8 @@ class _MJViewState extends State<MJView> {
                 ),
                 // 第二層容器，用於創建有色邊框效果
                 Container(
-                  height: cardHeight*0.87,
+                    width: width,
+                    height: cardHeight*0.87,
                     decoration: BoxDecoration(
                         color: widget.back ? Colors.orange[800] : Colors.grey[300], // 背面邊框顏色
                         borderRadius: BorderRadius.circular(20) // 圓角設定
@@ -224,6 +226,7 @@ class _MJViewState extends State<MJView> {
                 ),
                 // 第三層容器，用於顯示牌的正面圖案或保持空白
                 Container(
+                  width: width,
                   height: cardHeight*0.76,
                   decoration: widget.back ? BoxDecoration(
                       color: Colors.orange, // 背面顏色

@@ -301,13 +301,17 @@ class MJPageState extends State<MahJongPage> {
         ),
         Expanded(
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               for (var i = 0; i < _mahJongBloc.mJData.length; i++)
                 Flexible(
-                  child: MJView(
-                    back: back,
-                    side: side,
-                    model: _mahJongBloc.mJData[i],
+                  child: AspectRatio(
+                    aspectRatio: 1 / 1.4,
+                    child: MJView(
+                      back: back,
+                      side: side,
+                      model: _mahJongBloc.mJData[i],
+                    ),
                   ),
                 ),
             ],
