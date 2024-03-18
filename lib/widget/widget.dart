@@ -406,26 +406,28 @@ class AppDialogState extends State<AppDialog> {
                     },
                   ),
                 )),
-            Positioned(
-              bottom: 40,
-              child: this.widget.actionButtons != null
-                  ? Container(
-                width: this.widget.width - widget.reduceWidth,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: this.widget.actionButtons,
+
+            Column(
+              children: <Widget>[
+                Expanded(
+                  child: SizedBox()
                 ),
-              )
-                  : SizedBox(),
-            ),
-            Container(
-              alignment: this.widget.contentAlignment,
-              padding: EdgeInsets.only(
-                  top: titleHeight + widget.paddingTop,
-                  left: widget.paddingLeft,
-                  right: widget.paddingRight,
-                  bottom: this.widget.actionButtons != null ? 90 : widget.paddingBottom),
-              child: this.widget.child,
+                Expanded(
+                  // flex: 3,
+                  child: Container(
+                    alignment: this.widget.contentAlignment,
+                    child: this.widget.child,
+                  ),
+                ),
+                Expanded(
+                  child: this.widget.actionButtons != null
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: this.widget.actionButtons,
+                        )
+                      : SizedBox(),
+                ),
+              ],
             ),
           ],
         ),
