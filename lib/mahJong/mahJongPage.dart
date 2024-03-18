@@ -98,7 +98,7 @@ class MJPageState extends State<MahJongPage> {
 
   List<Map> getLevelData() {
     // 獲取難度等級數據
-    return Level.values.map((e) => {'display': e.getTCText, 'value': e.getText}).toList();
+    return Level.values.map((e) => {'display': e.getText, 'value': e.getText}).toList();
   }
 
   @override
@@ -134,7 +134,7 @@ class MJPageState extends State<MahJongPage> {
                 closeIcon: false,
                 actionButtons: <Widget>[
                   PrimaryButton(
-                    label: '重新發牌',
+                    label: 'Reshuffle', //'重新發牌',
                     color: Color(0xFF26ACA9),
                     onPressed: () {
                       doShuffle();
@@ -145,7 +145,7 @@ class MJPageState extends State<MahJongPage> {
                 child: Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(bottom: 10),
-                  child: Text('恭喜${state.winner}勝利',
+                  child: Text('Congratulations${state.winner}Wins', // Text('恭喜${state.winner}勝利',
                       style: TextStyle(
                         color: Color(0xff373a3c),
                         fontSize: 30 ,
@@ -212,18 +212,18 @@ class MJPageState extends State<MahJongPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         PrimaryButton(
-                          label: '重新發牌',
+                          label: 'Reshuffle', // '重新發牌',
                           onPressed: (){
                             doShuffle();
 //                          _mahJongBloc.add(InitialMJData());
                           },
                         ),
                         Container(
-                          width: 110,
+                          width: 160,
                           padding: EdgeInsets.all(16),
                           child: NewDropDownFormField(
-                            titleText: '難度',
-                            hintText: '選擇難度',
+                            titleText: 'Difficulty', // '難度',
+                            hintText: 'Choose Difficulty', // '選擇難度',
                             value: _mahJongBloc.level.getText,
                             onChanged: (value) {
                               _mahJongBloc.level = LevelHelper.getLevel(value);

@@ -36,8 +36,8 @@ class ChoiseCardState extends State<ChoiseCard> {
         Expanded(child: Container(
           padding: EdgeInsets.all(16),
           child: NewDropDownFormField(
-            titleText: '花色',
-            hintText: '選擇花色',
+            titleText: 'Suit', // '花色',
+            hintText: 'Choose Suit', // '選擇花色',
             value: pattern,
             reversed: widget.reversed,
             onChanged: (value) {
@@ -74,8 +74,8 @@ class ChoiseCardState extends State<ChoiseCard> {
         Expanded(child: Container(
           padding: EdgeInsets.all(16),
           child: NewDropDownFormField(
-            titleText: pattern == 'text' ? '文字' :'數字',
-            hintText: pattern == 'text' ? '選擇文字' :'選擇數字',
+            titleText: pattern == 'text' ? 'word' :'Number',
+            hintText: pattern == 'text' ? 'Choose word' :'Choose Number',
             value: number,
             reversed: widget.reversed,
             onChanged: (value) {
@@ -89,7 +89,7 @@ class ChoiseCardState extends State<ChoiseCard> {
           ),
         ),),
         PrimaryButton(
-          label: '確認選取',
+          label: 'Confirm', // '確認選取',
           color:Colors.amber[900],
           onPressed: (){
             if(pattern.isEmpty || number.isEmpty) return;
