@@ -15,6 +15,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   int bombCount = 20;
   List<int> bombList = [];
   bool gameOver = false;
+  bool isGameTouched = false; //該局遊戲是否已經點擊過，用於預防第一次點擊就點到炸彈
 
   @override
   Stream<GameState> mapEventToState(
@@ -33,53 +34,76 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   GameState get initialState => GameInitial();
 
   Stream<GameState> mapInitialGameDataToState() async*{
+    reshuffle();
+
+    yield RenderPages();
+  }
+
+  void reshuffle(){
     gameOver = false;
     cubeModels.clear();
     bombList.clear();
-    int totalCube = maxX * maxY;
-
-    //取得亂數編號
-    int getNum(List<int> bombList){
-      Random random = new Random();
-      int num = random.nextInt(totalCube);
-      if(bombList.contains(num)){
-        num = getNum(bombList);
-      }
-      return num;
-    }
+    isGameTouched = false;
 
     for(int i = 0 ; i < bombCount ; i++){
       int num = getNum(bombList);
       bombList.add(num);
     }
 
-//    for(int i = 0 ;i<maxY;i++){
-//      List<CubeModel> result = [];
-//      for(int i = 0 ;i<maxX;i++){
-//        result.add(CubeModel());
-//      }
-//      cubeModels.add(result);
-//    }
-
-    //取得周圍炸彈數量
-    int getBombCount(int x,int y){
-      List<int> aroundCubeId = getAroundCubeId(x,y);
-      List result = bombList.where((e) => aroundCubeId.contains(e)).toList();
-      return result.length;
-    }
-
     //Initial格子model
-    cubeModels = List.generate(maxY, (indexY){
+    cubeModels = getCubeModels();
+  }
+
+  //Initial格子model
+  List<List<CubeModel>> getCubeModels() {
+    return List.generate(maxY, (indexY){
       return List.generate(maxX, (indexX){
         int i = indexY * maxX + indexX+1;
         return CubeModel(x: indexX+1,y: indexY+1,haveBomb: bombList.contains(i),count: getBombCount(indexX+1,indexY+1),id: i);
       });
     });
-
-    yield RenderPages();
   }
 
-  void doClickCube(CubeModel data){
+  //取得周圍炸彈數量
+  int getBombCount(int x,int y){
+    List<int> aroundCubeId = getAroundCubeId(x,y);
+    List result = bombList.where((e) => aroundCubeId.contains(e)).toList();
+    return result.length;
+  }
+
+  //取得亂數編號
+  int getNum(List<int> bombList){
+    Random random = new Random();
+    int totalCube = maxX * maxY;
+    int num = random.nextInt(totalCube);
+    if(bombList.contains(num)){
+      num = getNum(bombList);
+    }
+    return num;
+  }
+
+  //第一次點擊，且點擊到炸彈，則將該cube之炸彈移除，並隨機挑選其他剩餘之cube放置炸彈，並回傳更新後的cube
+  CubeModel doFistClick(CubeModel data){
+    int num = getNum(bombList);
+    bombList.remove(data.id);
+    bombList.add(num);
+    cubeModels = getCubeModels();
+    return cubeModels[data.y-1][data.x-1];
+  }
+
+  //點擊格子並回傳是否勝利
+  bool doClickCube(CubeModel data){
+    print(isGameTouched);
+    print(data);
+    //若是第一次點擊，且點擊到炸彈，則將該cube之炸彈移除，並隨機挑選其他剩餘之cube放置炸彈
+    if(!isGameTouched){
+      //第一次點擊，需確保該格子無炸彈
+      if(data.haveBomb){
+        data = doFistClick(data);
+      }
+      isGameTouched = true;
+    }
+
     data.isClick = true;
     //若點擊到炸彈，則顯示所有炸彈的位置
     if(data.haveBomb){
@@ -120,11 +144,22 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       });
     }
 
+    //若點擊到所有沒有炸彈的格子則將剩餘格子插上旗子，並顯示勝利視窗
+    if(cubeModels.every((models) => models.every((model) => model.isClick || model.haveBomb))){
+      cubeModels.forEach((models) {
+        models.forEach((model) {
+          if(!model.isClick){
+            model.haveFlag = true;
+          }
+        });
+      });
+      return true;
+    }
+    return false;
   }
 
   Stream<GameState> mapClickCubeToState(CubeModel data) async*{
-    doClickCube(data);
-    yield RenderPages();
+    yield doClickCube(data) ? WinDialog() : RenderPages();
   }
 
   Stream<GameState> mapLongPressCubeToState(CubeModel data) async*{

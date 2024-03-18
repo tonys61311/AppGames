@@ -145,7 +145,7 @@ class MJPageState extends State<MahJongPage> {
                 child: Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(bottom: 10),
-                  child: Text('Congratulations${state.winner}Wins', // Text('恭喜${state.winner}勝利',
+                  child: Text('Congratulations ${state.winner} Wins', // Text('恭喜${state.winner}勝利',
                       style: TextStyle(
                         color: Color(0xff373a3c),
                         fontSize: 30 ,
