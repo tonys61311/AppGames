@@ -1,0 +1,35 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # 當 main 分支有更新時觸發
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 檢出程式碼
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 設置 Flutter 環境
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.10.5'
+
+      # 執行 Flutter Web 打包
+      - name: Build Flutter Web
+        run: |
+          flutter pub get
+          flutter build web --release --no-sound-null-safety
+
+      # 部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web  # Flutter Web 打包後的輸出目錄
+          publish_branch: gh-pages  # 指定部署的分支
