@@ -33,3 +33,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web  # Flutter Web 打包後的輸出目錄
           publish_branch: gh-pages  # 指定部署的分支
+
