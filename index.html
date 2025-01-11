@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Flutter Web App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<body>
+<!-- This script is correct for registering a service worker -->
+<script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/flutter_service_worker.js');
+            });
+        }
+    </script>
+<!-- Ensure main.dart.js exists in your web directory and is correctly referenced -->
+<script src="main.dart.js" type="application/javascript"></script>
+</body>
+</html>
