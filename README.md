@@ -10,6 +10,10 @@
 
 ---
 
+## Demo
+
+[AppGames - Demo](https://tonys61311.github.io/AppGames)
+
 ## 功能特性
 
 ### MineSweeper
