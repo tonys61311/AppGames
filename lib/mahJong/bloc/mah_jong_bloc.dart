@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
-import 'package:games/model/MJModel.dart';
+import 'package:games/models/MJModel.dart';
 import 'package:meta/meta.dart';
 
 part 'mah_jong_event.dart';

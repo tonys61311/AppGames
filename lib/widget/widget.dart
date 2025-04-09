@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:games/model/MJModel.dart';
+import 'package:games/models/MJModel.dart';
 
 class Mahjong extends StatefulWidget {
   final double width;

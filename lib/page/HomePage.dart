@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:games/enum/GameType.dart';
-import 'package:games/gamePage/bloc/game_bloc.dart';
-import 'package:games/gamePage/gamePage.dart';
-import 'package:games/mahJong/bloc/mah_jong_bloc.dart';
-import 'package:games/mahJong/mahJongPage.dart';
+import 'package:games/models/game_type/index.dart';
 import 'package:games/widget/GameCardWidget.dart';
 
 
@@ -18,72 +13,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  GameBloc _gameBloc;
-  MahJongBloc _mahJongBloc;
   @override
   void initState() {
-    _gameBloc = GameBloc();
-    _mahJongBloc = MahJongBloc();
     super.initState();
   }
 
+  List<GameType> games = [MineSweeperGame(), MahJongGame()];
+
   @override
   Widget build(BuildContext context) {
-    //踩地雷
-    Widget bombWidget = BlocProvider(
-      create: (BuildContext context) => _gameBloc,
-      child: BlocBuilder<GameBloc, GameState>(
-          builder: (BuildContext context, GameState state) {
-            return Scaffold(
-              appBar: AppBar(
-                title: Container(
-                  child: GestureDetector(
-                    child: Icon(_gameBloc.gameOver?Icons.mood_bad:Icons.mood,size: 50,color: Colors.black,),
-                    onTap: (){
-                      _gameBloc.add(InitialGameData());
-                    },
-                  ),
-                  decoration: new BoxDecoration(
-                    color: Colors.grey,
-                    border: Border(
-                      top: BorderSide(width: 4,color: Colors.white),
-                      left: BorderSide(width: 4,color: Colors.white),
-                      right: BorderSide(width: 4,color: Colors.black26),
-                      bottom: BorderSide(width: 4,color: Colors.black26),
-                    ),
-                  ),
-                ),
-                centerTitle: true,
-                backgroundColor: Colors.grey,
-              ),
-              body: Center(
-                child: GamePage(),
-              ),
-            );
-          }),
-    );
-
-    //麻將
-    Widget mahJong = BlocProvider(
-        create: (BuildContext context) => _mahJongBloc,
-        child: BlocBuilder<MahJongBloc, MahJongState>(
-            builder: (BuildContext context, MahJongState state) {
-              return Scaffold(
-                appBar: AppBar(
-                  title: Text(widget.title),
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Center(
-                    child: MahJongPage(),
-                    // child: test,
-                  ),
-                ),// This trailing comma makes auto-formatting nicer for build methods.
-              );
-            }));
-
-
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -104,9 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
         // child: buildGameCardView(context, bombWidget, mahJong),
         child: Row(
           children: [
-            for (GameType gameType in GameType.values)
+            for (GameType gameType in games)
             Expanded(
-                child: GameCardWidget(gameType: gameType,)
+                child: GameCardWidget(gameType: gameType)
             ),
           ],
         ),

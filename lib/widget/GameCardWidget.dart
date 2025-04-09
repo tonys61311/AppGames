@@ -1,15 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:games/enum/GameType.dart';
-import 'package:games/gamePage/gamePage.dart';
-import 'package:games/mahJong/mahJongPage.dart';
+import 'package:games/models/game_type/index.dart';
 
 class GameCardWidget extends StatelessWidget {
   final GameType gameType;
   final EdgeInsets padding;
 
   GameCardWidget({
-    this.gameType = GameType.MahJong,
+    this.gameType,
     this.padding = const EdgeInsets.all(0)
   });
 
@@ -26,7 +24,7 @@ class GameCardWidget extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   child: AutoSizeText(
-                      gameType.getTitle,
+                      gameType.title,
                     style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                     maxLines: 1, // 限制为单行
@@ -45,7 +43,7 @@ class GameCardWidget extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                         flex: 5,
-                        child: Image.asset(gameType.getImagePath)
+                        child: Image.asset(gameType.imagePath)
                     ), // 遊戲圖示
                     Expanded(
                       child: Row(
@@ -57,16 +55,7 @@ class GameCardWidget extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () {
                                 // 按钮点击事件，根据 gameType 导航到相应的页面
-                                switch (gameType) {
-                                  case GameType.MineSweeper:
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => GamePage()));
-                                    break;
-                                  case GameType.MahJong:
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => MahJongPage()));
-                                    break;
-                                  default:
-                                    print('未知游戏类型');
-                                }
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => gameType.buildPage));
                               },
                               child: Ink(
                                 decoration: BoxDecoration(

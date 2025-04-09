@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:games/model/CubeModel.dart';
+import 'package:games/models/CubeModel.dart';
 
 class Cube extends StatefulWidget {
   final CubeModel data;

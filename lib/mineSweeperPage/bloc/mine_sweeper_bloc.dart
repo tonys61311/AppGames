@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:games/model/CubeModel.dart';
+import 'package:games/models/CubeModel.dart';
 import 'package:meta/meta.dart';
 import 'dart:math';
 
-part 'game_event.dart';
-part 'game_state.dart';
+part 'mine_sweeper_event.dart';
+part 'mine_sweeper_state.dart';
 
-class GameBloc extends Bloc<GameEvent, GameState> {
+class MineSweeperBloc extends Bloc<MineSweeperEvent, MineSweeperState> {
   List<List<CubeModel>> cubeModels = [];
   int maxX = 10;
   int maxY = 10;
@@ -18,8 +18,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   bool isGameTouched = false; //該局遊戲是否已經點擊過，用於預防第一次點擊就點到炸彈
 
   @override
-  Stream<GameState> mapEventToState(
-    GameEvent event,
+  Stream<MineSweeperState> mapEventToState(
+    MineSweeperEvent event,
   ) async* {
     if(event is InitialGameData){
       yield* mapInitialGameDataToState();
@@ -31,9 +31,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   }
 
   @override
-  GameState get initialState => GameInitial();
+  MineSweeperState get initialState => GameInitial();
 
-  Stream<GameState> mapInitialGameDataToState() async*{
+  Stream<MineSweeperState> mapInitialGameDataToState() async*{
     reshuffle();
 
     yield RenderPages();
@@ -158,11 +158,11 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     return false;
   }
 
-  Stream<GameState> mapClickCubeToState(CubeModel data) async*{
+  Stream<MineSweeperState> mapClickCubeToState(CubeModel data) async*{
     yield doClickCube(data) ? WinDialog() : RenderPages();
   }
 
-  Stream<GameState> mapLongPressCubeToState(CubeModel data) async*{
+  Stream<MineSweeperState> mapLongPressCubeToState(CubeModel data) async*{
     data.haveFlag = !data.haveFlag;
     yield RenderPages();
   }

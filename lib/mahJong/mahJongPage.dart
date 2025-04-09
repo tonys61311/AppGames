@@ -1,16 +1,10 @@
 import 'dart:async';
 import 'dart:math';
-
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/services.dart';
-import 'package:games/enum/GameType.dart';
 import 'package:games/mahJong/bloc/mah_jong_bloc.dart';
-import 'package:games/model/MJModel.dart';
+import 'package:games/models/MJModel.dart';
 import 'package:games/widget/ChoiseCard.dart';
-import 'package:games/widget/MahJong.dart';
 import 'package:games/widget/newDropDown.dart';
 import 'package:games/widget/widget.dart';
 import '../audio/audio_manager.dart';
@@ -18,9 +12,12 @@ import '../audio/audio_manager.dart';
 
 class MahJongPage extends StatefulWidget {
 
-  const MahJongPage(
-      {Key key,})
-      : super(key: key);
+  final String title;
+
+  const MahJongPage({
+    Key key,
+    this.title,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -181,7 +178,7 @@ class MJPageState extends State<MahJongPage> {
 //            }
               return Scaffold(
                 appBar: AppBar(
-                  title: Text(GameType.MahJong.getTitle),
+                  title: Text(widget.title),
                 ),
                 body: Container(
                     padding: EdgeInsets.only(top:30,bottom: 30,right: 15,left:15),

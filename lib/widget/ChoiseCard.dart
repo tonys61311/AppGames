@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:games/model/MJModel.dart';
+import 'package:games/models/MJModel.dart';
 import 'package:games/widget/newDropDown.dart';
 import 'package:games/widget/widget.dart';
 

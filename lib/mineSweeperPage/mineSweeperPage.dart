@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:games/gamePage/bloc/game_bloc.dart';
+import 'package:games/mineSweeperPage/bloc/mine_sweeper_bloc.dart';
 import 'package:games/widget/Cube.dart';
 import 'package:flutter/services.dart';
 import 'package:games/widget/widget.dart';
 
-class GamePage extends StatefulWidget {
+class MineSweeperPage extends StatefulWidget {
 
-  const GamePage(
+  const MineSweeperPage(
       {Key key,})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
 // TODO: implement createState
-    return GamePageState();
+    return MineSweeperPageState();
   }
 }
 
-class GamePageState extends State<GamePage> {
-  GameBloc _gameBloc;
+class MineSweeperPageState extends State<MineSweeperPage> {
+  MineSweeperBloc _gameBloc;
   @override
   void initState() {
-    _gameBloc = GameBloc();
+    _gameBloc = MineSweeperBloc();
 
     super.initState();
   }
@@ -32,8 +32,8 @@ class GamePageState extends State<GamePage> {
 // TODO: implement build
     return BlocProvider(
       create: (BuildContext context) => _gameBloc,
-      child: BlocListener<GameBloc, GameState>(
-          listener: (BuildContext context, GameState state) {
+      child: BlocListener<MineSweeperBloc, MineSweeperState>(
+          listener: (BuildContext context, MineSweeperState state) {
             if(state is RenderPages){
 
             } else if (state is WinDialog){
@@ -67,8 +67,8 @@ class GamePageState extends State<GamePage> {
               ));
             }
           },
-          child: BlocBuilder<GameBloc, GameState>(
-              builder: (BuildContext context, GameState state) {
+          child: BlocBuilder<MineSweeperBloc, MineSweeperState>(
+              builder: (BuildContext context, MineSweeperState state) {
                 if(state is GameInitial){
                   _gameBloc.add(InitialGameData());
                 }
